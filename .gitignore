@@ -2,3 +2,5 @@ node_modules/
 .npm-cache/
 .env
 *.log
+__pycache__/
+*.pyc

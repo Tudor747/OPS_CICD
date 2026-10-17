@@ -1,0 +1,9 @@
+[Unit]
+Description=Hosting health and resource checks
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash /usr/local/lib/hosting/monitor.sh
+TimeoutStartSec=90

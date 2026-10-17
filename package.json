@@ -2,7 +2,10 @@
   "name": "ubuntu-express-demo",
   "version": "1.0.0",
   "private": true,
-  "scripts": { "start": "node app.js" },
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node --watch app.js"
+  },
   "engines": { "node": ">=24" },
   "dependencies": { "express": "^5.1.0" }
 }

@@ -7,11 +7,14 @@ pipeline {
     }
     triggers { pollSCM('H/2 * * * *') }
     stages {
+        stage('Test') {
+            steps { sh 'docker build --target test -t express-demo-tests .' }
+        }
         stage('Build') {
-            steps { sh 'docker compose build --pull app' }
+            steps { sh 'APP_IMAGE=express-demo:$GIT_COMMIT docker compose build --pull app' }
         }
         stage('Deploy') {
-            steps { sh 'docker compose up -d --no-build --wait --wait-timeout 90 app' }
+            steps { sh 'bash ops/deploy.sh express-demo:$GIT_COMMIT' }
         }
     }
     post {

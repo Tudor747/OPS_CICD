@@ -1,6 +1,7 @@
 name: express-demo
 services:
   app:
+    image: ${APP_IMAGE:-express-demo:local}
     build: .
     restart: unless-stopped
     init: true

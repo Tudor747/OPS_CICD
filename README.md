@@ -1,5 +1,9 @@
 # Ubuntu Express hosting demo
 
+For HTTPS, SSH/firewall setup, backups, monitoring, updates and release rollback,
+continue with [the server operations guide](ops/README.md) after initial setup.
+Fill in your own domain and backup destination when ready.
+
 A small Express app behind your existing Apache, with Docker Compose and a private Jenkins instance. No Nginx, PostgreSQL, Certbot, UFW, or monitoring tools are installed. GitHub hosts your repository; the server runs open-source software.
 
 ```text
@@ -116,7 +120,7 @@ Open `http://localhost:8080`. Unlock Jenkins, choose the plugin-selection option
 5. Set **Script Path** to `Jenkinsfile`, save, and click **Build Now** once.
 6. After it succeeds, edit the greeting in `app.js`, commit, and push to that branch. Jenkins checks for changes every two minutes and deploys automatically when a change is detected. No public webhook or Jenkins endpoint is needed.
 
-The initial build registers the polling trigger. Compose uses the fixed project name `express-demo`, so Jenkins replaces the same demo container started manually. The pipeline waits for container health and reports a failed deployment if health does not pass. Deployment can briefly interrupt requests; this demo does not implement rollback or zero-downtime deployment.
+The initial build registers the polling trigger. Compose uses the fixed project name `express-demo`, so Jenkins replaces the same demo container started manually. The pipeline tests HTTP routes, builds a commit-tagged image, and restores the previous image if deployment health fails. Deployment can briefly interrupt requests; it does not implement zero-downtime deployment or database migration rollback. See the operations guide for recovery details.
 
 ## Adding another project
 
